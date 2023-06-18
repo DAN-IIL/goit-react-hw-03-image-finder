@@ -18,11 +18,11 @@ export class Modal extends Component {
         }
     };
 
-    render() {
-        const { srcLarge, altText, escapeFromModal } = this.props;
+     render() {
+        const { largeImageURL, tags, altText, escapeFromModal } = this.props;
         return (
             <ModalOrevlay id="modal" onClick={escapeFromModal}>
-                <ModalWindow src={srcLarge} alt={`name: ${altText}`} />
+                <ModalWindow src={largeImageURL} alt={tags} />
             </ModalOrevlay>
     )
     }
