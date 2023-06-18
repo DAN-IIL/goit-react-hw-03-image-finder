@@ -12,14 +12,14 @@ export class Modal extends Component {
     }
 
     handleKeyDown = e => {
-        const { handleOnKeyDown } = this.props;
+        const { close} = this.props;
             if (e.key === "Escape") {
-            handleOnKeyDown(false);
+            close(false);
         }
     };
 
      render() {
-        const { largeImageURL, tags, altText, escapeFromModal } = this.props;
+        const { largeImageURL, tags, escapeFromModal } = this.props;
         return (
             <ModalOrevlay id="modal" onClick={escapeFromModal}>
                 <ModalWindow src={largeImageURL} alt={tags} />

@@ -5,7 +5,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import Button from './Button/Button';
 import { Modal } from './Modal/Modal';
-import LargeImage from './LargeImage/LargeImage';
+// import LargeImage from './LargeImage/LargeImage';
 import ButtonUp from './ButtonUp/ButtonUp';
 import Notiflix from 'notiflix';
 
@@ -110,8 +110,8 @@ export class App extends Component {
         {Boolean(items.length) && <Button onClick={loadMore} />}
         {items.length > 12 && <ButtonUp onClick={handleScrollUp} />}
         {showModal && (
-          <Modal close={closeModal}>
-            <LargeImage {...largeImage} />
+          <Modal close={closeModal} {...largeImage}>
+           
           </Modal>
         )}
       </div>
