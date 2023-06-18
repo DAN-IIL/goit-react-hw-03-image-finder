@@ -1,47 +1,22 @@
-import { Component } from "react"
-import { ImageGalleryItemsCSS, ImageGalleryImage } from "./ImageGalleryItem.styled"
-import { Modal } from "components"
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types';
+import styles from './imageGalleryItem.module.css';
 
-export class ImageGalleryItem extends Component {
-    state = {
-        visibleModal: false,
-    }
-    
-    handleClick() {
-        this.setState({
-            visibleModal: true,
-        })
-    }
-
-    handleKeyDown = isVisible => {
-            this.setState({
-                visibleModal: isVisible,
-            })
-        }
-    
-    handleClickOnOverlay = e => {
-        if (e.target !== e.currentTarget) { 
-            return
-        }
-        this.setState({
-            visibleModal: false,
-        })
-    }
-
-    render() {
-        const { smallImg, largeImg } = this.props;
-        const { visibleModal } = this.state;
-        return (
-        <ImageGalleryItemsCSS className="gallery-item">
-                <ImageGalleryImage onClick={() => this.handleClick()} src={smallImg} alt={`name: ${smallImg}`} />
-                {visibleModal && <Modal handleOnKeyDown={this.handleKeyDown} escapeFromModal={this.handleClickOnOverlay} srcLarge={largeImg} altText={smallImg} />}
-        </ImageGalleryItemsCSS>
-    )
-    }
-}
+const ImageGalleryItem = ({ src, alt, onClick }) => {
+  return (
+    <li className={styles.ImageGalleryItem}>
+      <img
+        src={src}
+        alt={alt}
+        className={styles.ImageGalleryItem_image}
+        onClick={onClick}
+      />
+    </li>
+  );
+};
 
 ImageGalleryItem.propTypes = {
-    smallImg: PropTypes.string.isRequired,
-    largeImg: PropTypes.string.isRequired,
-}
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
+
+export default ImageGalleryItem;

@@ -1,25 +1,27 @@
-import { ImageGalleryItem } from "components"
-import { ImageGalleryCSS } from "./ImageGallery.styled"
-import PropTypes from "prop-types"
+// import React from "react";
+import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import PropTypes from 'prop-types';
+import styles from './image-gallery.module.css';
 
-export const ImageGallery = ({res}) => {
-    return (
-        <ImageGalleryCSS className="gallery">
-            {res.map(({ id, webformatURL, largeImageURL }) => {
-                return (
-                    <ImageGalleryItem key={id} smallImg={webformatURL} largeImg={largeImageURL} />
-                )
-            })}
-        </ImageGalleryCSS>
-    )
-}
+const ImageGallery = ({ items, showLargeImage }) => {
+  const elements = items.map(({ id, webformatURL, largeImageURL, tags }) => (
+    <ImageGalleryItem
+      onClick={() => showLargeImage({ largeImageURL, tags })}
+      key={id}
+      src={webformatURL}
+      alt={tags}
+    />
+  ));
+
+  return <ul className={styles.gallery}>{elements}</ul>;
+};
+
+export default ImageGallery;
+
+ImageGallery.defaultProps = {
+  items: [],
+};
 
 ImageGallery.propTypes = {
-    res: PropTypes.arrayOf(
-        PropTypes.exact({
-        id: PropTypes.number.isRequired,
-        webformatURL: PropTypes.string.isRequired,
-        largeImageURL: PropTypes.string.isRequired,
-        }).isRequired
-    )
-}
+  showLargeImage: PropTypes.func.isRequired,
+};
