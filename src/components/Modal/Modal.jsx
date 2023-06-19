@@ -12,7 +12,7 @@ export class Modal extends Component {
     }
 
     handleKeyDown = e => {
-        const { close} = this.props;
+        const { close } = this.props;
             if (e.key === "Escape") {
             close(false);
         }

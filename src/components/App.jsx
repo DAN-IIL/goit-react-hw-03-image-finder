@@ -4,7 +4,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import Button from './Button/Button';
-import { Modal } from './Modal/Modal';
+import  {Modal}  from './Modal/Modal';
 // import LargeImage from './LargeImage/LargeImage';
 import ButtonUp from './ButtonUp/ButtonUp';
 import Notiflix from 'notiflix';
@@ -70,12 +70,13 @@ export class App extends Component {
     });
   };
 
-  closeModal = () => {
+  handleKeyDown = () => {
     this.setState({
       largeImage: null,
       showModal: false,
     });
   };
+
   handleScrollUp = e => {
     window.scrollTo({
       top: 0,
@@ -89,9 +90,10 @@ export class App extends Component {
       searchItems,
       loadMore,
       showLargeImage,
-      closeModal,
+      handleKeyDown,
       handleScrollUp,
     } = this;
+
     return (
       <div
         style={{
@@ -110,7 +112,7 @@ export class App extends Component {
         {Boolean(items.length) && <Button onClick={loadMore} />}
         {items.length > 12 && <ButtonUp onClick={handleScrollUp} />}
         {showModal && (
-          <Modal close={closeModal} {...largeImage}>
+          <Modal close={handleKeyDown} {...largeImage}>
            
           </Modal>
         )}
