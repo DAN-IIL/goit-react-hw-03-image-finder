@@ -1,36 +1,46 @@
-import { Component } from "react"
-import { ModalOrevlay, ModalWindow } from "./Modal.styled"
-import PropTypes from "prop-types"
+import { Component } from 'react';
+import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 
-export class Modal extends Component {
+import styles from './Modal.module.css';
+
+const modalRoot = document.querySelector("#modal-root");
+
+class Modal extends Component {
+
     componentDidMount() {
-        document.addEventListener("keydown", this.handleKeyDown);
+        document.addEventListener('keydown', this.closeModal)
     }
-
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.handleKeyDown);
+        document.removeEventListener("keydown", this.closeModal)
     }
 
-    handleKeyDown = e => {
-        const { close } = this.props;
-            if (e.key === "Escape") {
-            close(false);
+    closeModal = ({ target, currentTarget, code }) => {
+        if (target === currentTarget || code === "Escape") {
+            this.props.close()
         }
-    };
-
-     render() {
-        const { largeImageURL, tags, escapeFromModal } = this.props;
+    }
+    render() {
+        const { children, close } = this.props;
+        const { closeModal } = this;
         return (
-            <ModalOrevlay id="modal" onClick={escapeFromModal}>
-                <ModalWindow src={largeImageURL} alt={tags} />
-            </ModalOrevlay>
-    )
+            createPortal(
+                <div className={styles.overlay} onClick={closeModal}>
+                    <div className={styles.modal}>
+                        <span className={styles.close} onClick={close}>X</span>
+                        {children}
+                    </div>
+                </div>,
+                modalRoot
+            )
+
+        )
     }
 }
 
 Modal.propTypes = {
-    srcLarge: PropTypes.string.isRequired,
-    altText: PropTypes.string.isRequired,
-    escapeFromModal: PropTypes.func.isRequired,
-    handleOnKeyDown: PropTypes.func.isRequired,
-}
+  children: PropTypes.node.isRequired,
+  close: PropTypes.func.isRequired,
+};
+
+export default Modal;
